@@ -37,6 +37,7 @@
       padding: 10px;
       border: 1px solid #ccc;
       font-weight: bold;
+      cursor: pointer; /* Add cursor pointer to make dates clickable */
     }
     .today {
       background-color: #4285F4;
@@ -113,6 +114,7 @@
           day.classList.add("today");
         }
 
+        day.addEventListener("click", () => showEvents(i, month, year)); // Add click event
         days.appendChild(day);
       }
     }
@@ -142,6 +144,12 @@
 
       eventInput.value = "";
       eventDate.value = "";
+    }
+
+    function showEvents(day, month, year) {
+      // You can implement displaying events for a specific day here.
+      // You may need to store events in a data structure and filter events for the selected day.
+      alert(`Events for ${month + 1}/${day}/${year} will be displayed here.`);
     }
 
     function previousMonth() {
