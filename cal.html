@@ -86,6 +86,7 @@
 
     let currentYear = new Date().getFullYear();
     let currentMonth = new Date().getMonth();
+    const events = [];
 
     function generateCalendar(year, month) {
       const firstDay = new Date(year, month, 1);
@@ -135,6 +136,13 @@
         return;
       }
 
+      const event = {
+        date: dateValue,
+        text: eventText
+      };
+
+      events.push(event);
+
       const day = dateValue.getDate();
 
       const eventItem = document.createElement("div");
@@ -147,9 +155,20 @@
     }
 
     function showEvents(day, month, year) {
-      // You can implement displaying events for a specific day here.
-      // You may need to store events in a data structure and filter events for the selected day.
-      alert(`Events for ${month + 1}/${day}/${year} will be displayed here.`);
+      const selectedDate = new Date(year, month, day);
+      const eventsForDay = events.filter(event => {
+        const eventDate = new Date(event.date);
+        return (
+          eventDate.getFullYear() === year &&
+          eventDate.getMonth() === month &&
+          eventDate.getDate() === day
+        );
+      });
+
+      let eventText = "Events for " + (month + 1) + "/" + day + "/" + year + ":\n";
+      eventText += eventsForDay.map(event => event.text).join("\n");
+
+      alert(eventText);
     }
 
     function previousMonth() {
