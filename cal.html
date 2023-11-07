@@ -44,6 +44,9 @@
       color: #fff;
       border-radius: 50%;
     }
+    .national-event {
+      background-color: #ffcc00; /* Yellow background for national events */
+    }
     .event-list {
       margin-top: 20px;
     }
@@ -87,6 +90,11 @@
     let currentYear = new Date().getFullYear();
     let currentMonth = new Date().getMonth();
     const events = [];
+    const nationalEvents = [
+      { date: "2023-11-11", text: "Veterans Day" },
+      { date: "2023-11-24", text: "Thanksgiving Day" },
+      // Add more national events here
+    ];
 
     function generateCalendar(year, month) {
       const firstDay = new Date(year, month, 1);
@@ -113,6 +121,19 @@
         const currentDate = new Date();
         if (currentDate.getFullYear() === year && currentDate.getMonth() === month && currentDate.getDate() === i) {
           day.classList.add("today");
+        }
+
+        const nationalEvent = nationalEvents.find(event => {
+          const eventDate = new Date(event.date);
+          return (
+            eventDate.getFullYear() === year &&
+            eventDate.getMonth() === month &&
+            eventDate.getDate() === i
+          );
+        });
+
+        if (nationalEvent) {
+          day.classList.add("national-event");
         }
 
         day.addEventListener("click", () => showEvents(i, month, year)); // Add click event
