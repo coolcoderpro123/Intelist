@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <style>
     .calendar-container {
-      background-color: #fff;
+      background-color: #f9f9f9;
       border-radius: 5px;
       padding: 20px;
     }
@@ -22,6 +22,11 @@
     }
     .month-name {
       font-size: 24px;
+      font-weight: bold;
+    }
+    .year {
+      font-size: 18px;
+      color: #fff;
     }
     .days {
       display: grid;
@@ -31,6 +36,7 @@
     .day {
       padding: 10px;
       border: 1px solid #ccc;
+      font-weight: bold;
     }
     .today {
       background-color: #4285F4;
@@ -49,7 +55,10 @@
   <div class="container">
     <div class="calendar-container">
       <div class="calendar-header">
-        <h1 class="month-name" id="month-name"></h1>
+        <div>
+          <span class="month-name" id="month-name"></span>
+          <span class="year" id="year"></span>
+        </div>
         <div>
           <button class="btn btn-primary" onclick="previousMonth()">&#9665;</button>
           <button class="btn btn-primary" onclick="nextMonth()">&#9655;</button>
@@ -72,6 +81,7 @@
     const eventList = document.getElementById("event-list");
     const days = document.getElementById("days");
     const monthName = document.getElementById("month-name");
+    const yearDisplay = document.getElementById("year");
 
     let currentYear = new Date().getFullYear();
     let currentMonth = new Date().getMonth();
@@ -81,6 +91,7 @@
       const lastDay = new Date(year, month + 1, 0);
 
       monthName.textContent = new Date(year, month, 1).toLocaleString('default', { month: 'long' });
+      yearDisplay.textContent = year;
 
       while (days.firstChild) {
         days.removeChild(days.firstChild);
