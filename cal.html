@@ -2,20 +2,31 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>Calendar</title>
+  <title>Professional Calendar</title>
   <style>
     body {
       font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      background-color: #f5f5f5;
     }
     .calendar {
-      width: 400px;
-      margin: 0 auto;
+      width: 80%;
+      background-color: #fff;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      border-radius: 5px;
+      padding: 20px;
     }
     .header {
       text-align: center;
       background-color: #3498db;
       color: #fff;
       padding: 10px;
+      border-radius: 5px 5px 0 0;
     }
     .days {
       display: grid;
@@ -27,17 +38,25 @@
       border: 1px solid #ccc;
     }
     .events {
-      margin-top: 10px;
+      margin-top: 20px;
     }
     .event {
       margin: 5px 0;
+      padding: 5px;
+      background-color: #e9e9e9;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    .current-day {
+      background-color: #3498db;
+      color: #fff;
     }
   </style>
 </head>
 <body>
   <div class="calendar">
     <div class="header">
-      <h1>My Calendar</h1>
+      <h1>Professional Calendar</h1>
     </div>
     <div class="days">
       <div class="day">Sun</div>
@@ -52,26 +71,38 @@
       <h2>Events</h2>
       <div id="event-list"></div>
       <input type="text" id="event-input" placeholder="Add an event">
+      <input type="date" id="event-date" placeholder="Event Date">
       <button onclick="addEvent()">Add</button>
     </div>
   </div>
 
   <script>
-    function addEvent() {
-      const eventInput = document.getElementById("event-input");
-      const eventList = document.getElementById("event-list");
-      const eventText = eventInput.value;
+    const eventList = document.getElementById("event-list");
+    const eventInput = document.getElementById("event-input");
+    const eventDateInput = document.getElementById("event-date");
 
-      if (eventText.trim() === "") {
-        alert("Please enter an event");
+    function addEvent() {
+      const eventText = eventInput.value;
+      const eventDate = new Date(eventDateInput.value);
+
+      if (eventText.trim() === "" || isNaN(eventDate.getTime())) {
+        alert("Please enter a valid event and date.");
       } else {
         const eventItem = document.createElement("div");
         eventItem.className = "event";
         eventItem.textContent = eventText;
+
+        const dayOfWeek = eventDate.getDay();
+        const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
         eventList.appendChild(eventItem);
         eventInput.value = "";
+        eventDateInput.value = "";
+
+        const calendarDays = document.querySelectorAll(".day");
+        calendarDays[dayOfWeek].appendChild(eventItem);
       }
     }
   </script>
 </body>
 </html>
+
