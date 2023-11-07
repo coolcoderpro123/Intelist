@@ -2,21 +2,17 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>Google-Like Calendar</title>
+  <title>Professional Calendar</title>
   <style>
     body {
       font-family: Arial, sans-serif;
       margin: 0;
       padding: 0;
       background-color: #f4f4f4;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
     }
     .calendar {
-      max-width: 800px;
-      width: 100%;
+      max-width: 1000px;
+      margin: 0 auto;
       background-color: #fff;
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
       border-radius: 5px;
@@ -24,11 +20,15 @@
     }
     .header {
       text-align: center;
-      background-color: #4285f4;
+      background-color: #3498db;
       color: #fff;
-      padding: 20px;
+      padding: 10px;
       border-radius: 5px 5px 0 0;
+    }
+    .month {
+      text-align: center;
       font-size: 24px;
+      margin-bottom: 20px;
     }
     .days {
       display: grid;
@@ -38,11 +38,9 @@
     .day {
       padding: 10px;
       border: 1px solid #ccc;
-      font-weight: bold;
-      font-size: 16px;
     }
     .today {
-      background-color: #4285f4;
+      background-color: #3498db;
       color: #fff;
     }
     .events {
@@ -51,22 +49,16 @@
     }
     .event {
       margin: 5px 0;
-      padding: 10px;
-      background-color: #4285f4;
-      color: #fff;
-      border-radius: 5px;
-    }
-    .event input[type="text"],
-    .event input[type="date"],
-    .event button {
-      margin-right: 10px;
     }
   </style>
 </head>
 <body>
   <div class="calendar">
     <div class="header">
-      <h1>Google-Like Calendar</h1>
+      <h1>My Professional Calendar</h1>
+    </div>
+    <div class="month">
+      January 2023 <!-- Change the month here -->
     </div>
     <div class="days">
       <div class="day">Sun</div>
@@ -80,11 +72,9 @@
     <div class="events">
       <h2>Events</h2>
       <div id="event-list"></div>
-      <div class="event">
-        <input type="text" id="event-input" placeholder="Add an event">
-        <input type="date" id="event-date">
-        <button onclick="addEvent()">Add</button>
-      </div>
+      <input type="text" id="event-input" placeholder="Add an event">
+      <input type="date" id="event-date">
+      <button onclick="addEvent()">Add</button>
     </div>
   </div>
 
@@ -95,7 +85,7 @@
       const eventInput = document.getElementById("event-input");
       const eventDate = document.getElementById("event-date");
       const eventText = eventInput.value;
-      const dateValue = new Date(eventDate.value);
+      const dateValue = new Date(eventDate.value + "T00:00:00");
 
       if (eventText.trim() === "") {
         alert("Please enter an event");
@@ -107,12 +97,15 @@
         return;
       }
 
-      const day = dateValue.getDay();
+      const day = dateValue.getDate() - 1; // Adjust for zero-based index
 
       const eventItem = document.createElement("div");
       eventItem.className = "event";
-      eventItem.textContent = eventText + " (on " + dateValue.toDateString() + ")";
+      eventItem.textContent = eventText;
       eventList.appendChild(eventItem);
+
+      const dayCells = document.querySelectorAll(".day");
+      dayCells[day].appendChild(eventItem);
 
       eventInput.value = "";
       eventDate.value = "";
