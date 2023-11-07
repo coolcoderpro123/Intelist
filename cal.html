@@ -3,25 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <title>Google Calendar-Like Calendar</title>
+  <!-- Include Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      background-color: #f4f4f4;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-    }
-    .calendar {
+    .calendar-container {
       background-color: #fff;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
       border-radius: 5px;
       padding: 20px;
     }
-    .header {
-      text-align: center;
+    .calendar-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
       background-color: #4285F4;
       color: #fff;
       padding: 10px;
@@ -29,18 +22,11 @@
     }
     .month-name {
       font-size: 24px;
-      margin-bottom: 20px;
-    }
-    .month-switch {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
     }
     .days {
       display: grid;
       grid-template-columns: repeat(7, 1fr);
       text-align: center;
-      font-weight: bold;
     }
     .day {
       padding: 10px;
@@ -51,7 +37,7 @@
       color: #fff;
       border-radius: 50%;
     }
-    .events {
+    .event-list {
       margin-top: 20px;
     }
     .event {
@@ -60,22 +46,25 @@
   </style>
 </head>
 <body>
-  <div class="calendar">
-    <div class="header">
-      <h1>Google Calendar-Like Calendar</h1>
-    </div>
-    <div class="month-switch">
-      <button onclick="previousMonth()">&#9665;</button>
-      <div class="month-name" id="month-name"></div>
-      <button onclick="nextMonth()">&#9655;</button>
-    </div>
-    <div class="days" id="days"></div>
-    <div class="events">
-      <h2>Events</h2>
-      <div id="event-list"></div>
-      <input type="text" id="event-input" placeholder="Add an event">
-      <input type="date" id="event-date">
-      <button onclick="addEvent()">Add</button>
+  <div class="container">
+    <div class="calendar-container">
+      <div class="calendar-header">
+        <h1 class="month-name" id="month-name"></h1>
+        <div>
+          <button class="btn btn-primary" onclick="previousMonth()">&#9665;</button>
+          <button class="btn btn-primary" onclick="nextMonth()">&#9655;</button>
+        </div>
+      </div>
+      <div class="days" id="days"></div>
+      <div class="event-list">
+        <h2>Events</h2>
+        <div id="event-list"></div>
+        <div class="form-group">
+          <input type="text" id="event-input" class="form-control" placeholder="Add an event">
+          <input type="date" id="event-date" class="form-control">
+        </div>
+        <button class="btn btn-primary" onclick="addEvent()">Add</button>
+      </div>
     </div>
   </div>
 
