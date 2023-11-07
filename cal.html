@@ -1,108 +1,140 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Professional Calendar</title>
   <style>
     body {
       font-family: Arial, sans-serif;
       margin: 0;
       padding: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-      background-color: #f5f5f5;
+      background-color: #f0f0f0;
     }
     .calendar {
-      width: 80%;
+      width: 100%;
+      max-width: 800px;
+      margin: 0 auto;
       background-color: #fff;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-      border-radius: 5px;
-      padding: 20px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     }
     .header {
-      text-align: center;
       background-color: #3498db;
       color: #fff;
-      padding: 10px;
-      border-radius: 5px 5px 0 0;
-    }
-    .days {
-      display: grid;
-      grid-template-columns: repeat(7, 1fr);
       text-align: center;
+      padding: 20px 0;
+      font-size: 24px;
+    }
+    .year {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+    }
+    .month {
+      width: calc(100% / 12);
+      text-align: center;
+      padding: 20px;
+    }
+    .month-title {
+      font-size: 20px;
+      font-weight: bold;
     }
     .day {
-      padding: 10px;
-      border: 1px solid #ccc;
-    }
-    .events {
-      margin-top: 20px;
+      width: 100%;
+      height: 40px;
+      line-height: 40px;
+      text-align: right;
+      padding-right: 10px;
+      border-bottom: 1px solid #ccc;
+      position: relative;
+      cursor: pointer;
     }
     .event {
-      margin: 5px 0;
-      padding: 5px;
-      background-color: #e9e9e9;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-    }
-    .current-day {
       background-color: #3498db;
       color: #fff;
+      border-radius: 4px;
+      padding: 2px 4px;
+      position: absolute;
+      top: 5px;
+      left: 10px;
+      font-size: 12px;
     }
   </style>
 </head>
 <body>
   <div class="calendar">
-    <div class="header">
-      <h1>Professional Calendar</h1>
-    </div>
-    <div class="days">
-      <div class="day">Sun</div>
-      <div class="day">Mon</div>
-      <div class="day">Tue</div>
-      <div class="day">Wed</div>
-      <div class="day">Thu</div>
-      <div class="day">Fri</div>
-      <div class="day">Sat</div>
-    </div>
-    <div class="events">
-      <h2>Events</h2>
-      <div id="event-list"></div>
-      <input type="text" id="event-input" placeholder="Add an event">
-      <input type="date" id="event-date" placeholder="Event Date">
-      <button onclick="addEvent()">Add</button>
+    <div class="header">Professional Calendar</div>
+    <div class="year">
+      <!-- Generate calendar months -->
+      <div class="month">
+        <div class="month-title">January</div>
+        <!-- Generate days for January -->
+        <!-- Include day numbers and events -->
+      </div>
+      <!-- Repeat for other months -->
     </div>
   </div>
 
   <script>
-    const eventList = document.getElementById("event-list");
-    const eventInput = document.getElementById("event-input");
-    const eventDateInput = document.getElementById("event-date");
+    // Sample event data structure
+    const events = [
+      { date: "2023-11-06", title: "Sample Event 1" },
+      { date: "2023-12-15", title: "Sample Event 2" },
+      // Add more events here
+    ];
 
-    function addEvent() {
-      const eventText = eventInput.value;
-      const eventDate = new Date(eventDateInput.value);
+    function displayEventsOnCalendar() {
+      const days = document.querySelectorAll('.day');
 
-      if (eventText.trim() === "" || isNaN(eventDate.getTime())) {
-        alert("Please enter a valid event and date.");
-      } else {
-        const eventItem = document.createElement("div");
-        eventItem.className = "event";
-        eventItem.textContent = eventText;
+      events.forEach(event => {
+        const eventDate = new Date(event.date).getDate();
+        const eventTitle = event.title;
 
-        const dayOfWeek = eventDate.getDay();
-        const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-        eventList.appendChild(eventItem);
-        eventInput.value = "";
-        eventDateInput.value = "";
-
-        const calendarDays = document.querySelectorAll(".day");
-        calendarDays[dayOfWeek].appendChild(eventItem);
-      }
+        days.forEach(day => {
+          const dayDate = +day.textContent;
+          if (dayDate === eventDate) {
+            const eventElement = document.createElement('div');
+            eventElement.className = 'event';
+            eventElement.textContent = eventTitle;
+            day.appendChild(eventElement);
+          }
+        });
+      });
     }
+
+    function renderCalendar() {
+      // You can use a library like Luxon.js or Moment.js for date manipulation
+      const currentDate = new Date();
+
+      // Loop through all months and create the calendar structure
+      const yearElement = document.querySelector('.year');
+      for (let month = 0; month < 12; month++) {
+        const monthElement = document.createElement('div');
+        monthElement.className = 'month';
+        monthElement.innerHTML = `<div class="month-title">${getMonthName(month)}</div>`;
+
+        for (let day = 1; day <= getDaysInMonth(currentDate.getFullYear(), month); day++) {
+          const dayElement = document.createElement('div');
+          dayElement.className = 'day';
+          dayElement.textContent = day;
+          monthElement.appendChild(dayElement);
+        }
+
+        yearElement.appendChild(monthElement);
+      }
+      displayEventsOnCalendar();
+    }
+
+    function getMonthName(monthIndex) {
+      const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+      return monthNames[monthIndex];
+    }
+
+    function getDaysInMonth(year, month) {
+      return new Date(year, month + 1, 0).getDate();
+    }
+
+    renderCalendar();
   </script>
 </body>
 </html>
-
