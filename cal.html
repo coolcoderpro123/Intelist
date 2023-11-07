@@ -2,17 +2,19 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>Professional Calendar</title>
+  <title>Google Calendar-Like Calendar</title>
   <style>
     body {
       font-family: Arial, sans-serif;
       margin: 0;
       padding: 0;
       background-color: #f4f4f4;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
     }
     .calendar {
-      max-width: 1000px;
-      margin: 0 auto;
       background-color: #fff;
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
       border-radius: 5px;
@@ -20,13 +22,12 @@
     }
     .header {
       text-align: center;
-      background-color: #3498db;
+      background-color: #4285F4;
       color: #fff;
       padding: 10px;
       border-radius: 5px 5px 0 0;
     }
-    .month {
-      text-align: center;
+    .month-name {
       font-size: 24px;
       margin-bottom: 20px;
     }
@@ -34,18 +35,19 @@
       display: grid;
       grid-template-columns: repeat(7, 1fr);
       text-align: center;
+      font-weight: bold;
     }
     .day {
       padding: 10px;
       border: 1px solid #ccc;
     }
     .today {
-      background-color: #3498db;
+      background-color: #4285F4;
       color: #fff;
+      border-radius: 50%;
     }
     .events {
       margin-top: 20px;
-      padding: 20px;
     }
     .event {
       margin: 5px 0;
@@ -55,20 +57,10 @@
 <body>
   <div class="calendar">
     <div class="header">
-      <h1>My Professional Calendar</h1>
+      <h1>Google Calendar-Like Calendar</h1>
     </div>
-    <div class="month">
-      January 2023 <!-- Change the month here -->
-    </div>
-    <div class="days">
-      <div class="day">Sun</div>
-      <div class="day">Mon</div>
-      <div class="day">Tue</div>
-      <div class="day">Wed</div>
-      <div class="day">Thu</div>
-      <div class="day">Fri</div>
-      <div class="day">Sat</div>
-    </div>
+    <div class="month-name" id="month-name"></div>
+    <div class="days" id="days"></div>
     <div class="events">
       <h2>Events</h2>
       <div id="event-list"></div>
@@ -80,12 +72,44 @@
 
   <script>
     const eventList = document.getElementById("event-list");
+    const days = document.getElementById("days");
+    const monthName = document.getElementById("month-name");
+
+    function generateCalendar(year, month) {
+      const firstDay = new Date(year, month, 1);
+      const lastDay = new Date(year, month + 1, 0);
+
+      monthName.textContent = new Date(year, month, 1).toLocaleString('default', { month: 'long' });
+
+      while (days.firstChild) {
+        days.removeChild(days.firstChild);
+      }
+
+      for (let i = 0; i < firstDay.getDay(); i++) {
+        const day = document.createElement("div");
+        day.className = "day";
+        days.appendChild(day);
+      }
+
+      for (let i = 1; i <= lastDay.getDate(); i++) {
+        const day = document.createElement("div");
+        day.className = "day";
+        day.textContent = i;
+
+        const currentDate = new Date();
+        if (currentDate.getFullYear() === year && currentDate.getMonth() === month && currentDate.getDate() === i) {
+          day.classList.add("today");
+        }
+
+        days.appendChild(day);
+      }
+    }
 
     function addEvent() {
       const eventInput = document.getElementById("event-input");
       const eventDate = document.getElementById("event-date");
       const eventText = eventInput.value;
-      const dateValue = new Date(eventDate.value + "T00:00:00");
+      const dateValue = new Date(eventDate.value);
 
       if (eventText.trim() === "") {
         alert("Please enter an event");
@@ -97,19 +121,20 @@
         return;
       }
 
-      const day = dateValue.getDate() - 1; // Adjust for zero-based index
+      const day = dateValue.getDate();
 
       const eventItem = document.createElement("div");
       eventItem.className = "event";
-      eventItem.textContent = eventText;
+      eventItem.textContent = eventText + " (on " + dateValue.toDateString() + ")";
       eventList.appendChild(eventItem);
-
-      const dayCells = document.querySelectorAll(".day");
-      dayCells[day].appendChild(eventItem);
 
       eventInput.value = "";
       eventDate.value = "";
     }
+
+    // Initialize the calendar with the current month and year.
+    const currentDate = new Date();
+    generateCalendar(currentDate.getFullYear(), currentDate.getMonth());
   </script>
 </body>
 </html>
