@@ -31,6 +31,11 @@
       font-size: 24px;
       margin-bottom: 20px;
     }
+    .month-switch {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
     .days {
       display: grid;
       grid-template-columns: repeat(7, 1fr);
@@ -59,7 +64,11 @@
     <div class="header">
       <h1>Google Calendar-Like Calendar</h1>
     </div>
-    <div class="month-name" id="month-name"></div>
+    <div class="month-switch">
+      <button onclick="previousMonth()">&#9665;</button>
+      <div class="month-name" id="month-name"></div>
+      <button onclick="nextMonth()">&#9655;</button>
+    </div>
     <div class="days" id="days"></div>
     <div class="events">
       <h2>Events</h2>
@@ -74,6 +83,9 @@
     const eventList = document.getElementById("event-list");
     const days = document.getElementById("days");
     const monthName = document.getElementById("month-name");
+
+    let currentYear = new Date().getFullYear();
+    let currentMonth = new Date().getMonth();
 
     function generateCalendar(year, month) {
       const firstDay = new Date(year, month, 1);
@@ -109,7 +121,7 @@
       const eventInput = document.getElementById("event-input");
       const eventDate = document.getElementById("event-date");
       const eventText = eventInput.value;
-      const dateValue = new Date(eventDate.value);
+      const dateValue = new Date(eventDate.value + 'T00:00:00');
 
       if (eventText.trim() === "") {
         alert("Please enter an event");
@@ -132,9 +144,28 @@
       eventDate.value = "";
     }
 
+    function previousMonth() {
+      if (currentMonth === 0) {
+        currentMonth = 11;
+        currentYear -= 1;
+      } else {
+        currentMonth -= 1;
+      }
+      generateCalendar(currentYear, currentMonth);
+    }
+
+    function nextMonth() {
+      if (currentMonth === 11) {
+        currentMonth = 0;
+        currentYear += 1;
+      } else {
+        currentMonth += 1;
+      }
+      generateCalendar(currentYear, currentMonth);
+    }
+
     // Initialize the calendar with the current month and year.
-    const currentDate = new Date();
-    generateCalendar(currentDate.getFullYear(), currentDate.getMonth());
+    generateCalendar(currentYear, currentMonth);
   </script>
 </body>
 </html>
