@@ -102,44 +102,36 @@
     };
 
     function generateCalendar(year, month) {
-  const firstDay = new Date(year, month, 1);
-  const lastDay = new Date(year, month + 1, 0);
+      const firstDay = new Date(year, month, 1);
+      const lastDay = new Date(year, month + 1, 0);
 
-  monthName.textContent = new Date(year, month, 1).toLocaleString('default', { month: 'long' });
-  yearDisplay.textContent = year;
+      monthName.textContent = new Date(year, month, 1).toLocaleString('default', { month: 'long' });
+      yearDisplay.textContent = year;
 
-  const dayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+      while (days.firstChild) {
+        days.removeChild(days.firstChild);
+      }
 
-  // Create day name headers
-  for (const dayName of dayNames) {
-    const dayHeader = document.createElement("div");
-    dayHeader.className = "day";
-    dayHeader.textContent = dayName;
-    days.appendChild(dayHeader);
-  }
+      for (let i = 0; i < firstDay.getDay(); i++) {
+        const day = document.createElement("div");
+        day.className = "day";
+        days.appendChild(day);
+      }
 
-  // Create empty placeholders for the days before the first day of the month
-  for (let i = 0; i < firstDay.getDay(); i++) {
-    const day = document.createElement("div");
-    day.className = "day";
-    days.appendChild(day);
-  }
+      for (let i = 1; i <= lastDay.getDate(); i++) {
+        const day = document.createElement("div");
+        day.className = "day";
+        day.textContent = i;
 
-  for (let i = 1; i <= lastDay.getDate(); i++) {
-    const day = document.createElement("div");
-    day.className = "day";
-    day.textContent = i;
+        const currentDate = new Date();
+        if (currentDate.getFullYear() === year && currentDate.getMonth() === month && currentDate.getDate() === i) {
+          day.classList.add("today");
+        }
 
-    const currentDate = new Date();
-    if (currentDate.getFullYear() === year && currentDate.getMonth() === month && currentDate.getDate() === i) {
-      day.classList.add("today");
+        day.addEventListener("click", () => showEvents(i, month, year)); // Add click event
+        days.appendChild(day);
+      }
     }
-
-    day.addEventListener("click", () => showEvents(i, month, year)); // Add click event
-    days.appendChild(day);
-  }
-}
-
 
     function addEvent() {
       const eventInput = document.getElementById("event-input");
