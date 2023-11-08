@@ -13,7 +13,7 @@
     }
     .calendar-header {
       display: flex;
-      flex-direction: column;
+      justify-content: space-between;
       align-items: center;
       background-color: #4285F4;
       color: #fff;
@@ -56,16 +56,13 @@
   <div class="container">
     <div class="calendar-container">
       <div class="calendar-header">
-        <span class="month-name" id="month-name"></span>
-        <span class="year" id="year"></span>
-        <div class="days-header">
-          <div class="day-header">Sun</div>
-          <div class="day-header">Mon</div>
-          <div class="day-header">Tue</div>
-          <div class="day-header">Wed</div>
-          <div class="day-header">Thu</div>
-          <div class="day-header">Fri</div>
-          <div class="day-header">Sat</div>
+        <div>
+          <span class="month-name" id="month-name"></span>
+          <span class="year" id="year"></span>
+        </div>
+        <div>
+          <button class="btn btn-primary" onclick="previousMonth()">&#9665;</button>
+          <button class="btn btn-primary" onclick="nextMonth()">&#9655;</button>
         </div>
       </div>
       <div class="days" id="days"></div>
@@ -101,7 +98,7 @@
       "2024-12-25": "Christmas Day",
       "2023-12-24": "Christmas Eve",
       "2024-12-24": "Christmas Eve",
-      // Add Default Holidays Here
+      //Add Default Holidays Here
     };
 
     function generateCalendar(year, month) {
