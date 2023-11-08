@@ -71,7 +71,7 @@
         <div id="event-list"></div>
         <div class="form-group">
           <input type="text" id="event-input" class="form-control" placeholder="Add an event">
-          <input type="date" id="event-date" class="form-control">
+          <input type="date" id="event-date" class a="form-control">
         </div>
         <button class="btn btn-primary" onclick="addEvent()">Add</button>
       </div>
@@ -88,11 +88,11 @@
     let currentMonth = new Date().getMonth();
     const events = [];
 
-    // Default national events and holidays
-    const nationalEvents = {
-      "2023-11-11": "Veterans Day",
-      "2023-12-25": "Christmas Day",
-      // Add more events here
+    // Define national holidays in the code
+    const nationalHolidays = {
+      "2023-01-01": "New Year's Day",
+      "2023-07-04": "Independence Day",
+      // Add more holidays here
     };
 
     function generateCalendar(year, month) {
@@ -175,8 +175,8 @@
       let eventText = "Events for " + (month + 1) + "/" + day + "/" + year + ":\n";
       eventText += eventsForDay.map(event => event.text).join("\n");
 
-      if (nationalEvents[selectedDate.toISOString().split("T")[0]]) {
-        eventText += "\n\nNational Event: " + nationalEvents[selectedDate.toISOString().split("T")[0]];
+      if (nationalHolidays[selectedDate.toISOString().split("T")[0]]) {
+        eventText += "\n\nNational Holiday: " + nationalHolidays[selectedDate.toISOString().split("T")[0]];
       }
 
       alert(eventText);
