@@ -1,90 +1,114 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #f0f0f0;
-      margin: 0;
-      padding: 0;
-    }
-    
-    #sidebar {
-      background-color: #333;
-      color: #fff;
-      width: 250px;
-      position: fixed;
-      top: 0;
-      left: 0;
-      height: 100%;
-      padding: 20px;
-    }
-    
-    #content {
-      margin-left: 280px;
-      padding: 20px;
-    }
-    
-    h1 {
-      font-size: 24px;
-      margin-bottom: 20px;
-    }
-    
-    label {
-      font-weight: bold;
-    }
-    
-    input[type="text"],
-    input[type="password"],
-    select {
-      width: 100%;
-      padding: 10px;
-      margin-bottom: 15px;
-    }
-    
-    button {
-      background-color: #007BFF;
-      color: #fff;
-      padding: 10px 20px;
-      border: none;
-      cursor: pointer;
-    }
-    
-    button:hover {
-      background-color: #0056b3;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Settings</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .settings-container {
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            width: 400px;
+            text-align: center;
+        }
+        h2 {
+            margin: 0;
+            font-size: 24px;
+        }
+        .form-group {
+            margin: 20px 0;
+        }
+        label {
+            font-weight: bold;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+        .mode-switch {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 20px 0;
+        }
+        .mode-switch label {
+            margin-right: 10px;
+        }
+    </style>
 </head>
 <body>
-  <div id="sidebar">
-    <h1>Settings</h1>
-    <ul>
-      <li><a href="#">General</a></li>
-      <li><a href="#">Security</a></li>
-      <li><a href="#">Notifications</a></li>
-    </ul>
-  </div>
-  <div id="content">
-    <h1>General Settings</h1>
-    <form>
-      <label for="username">Username:</label>
-      <input type="text" id="username" name="username" placeholder="Your username"><br>
-      
-      <label for="password">Password:</label>
-      <input type="password" id="password" name="password" placeholder="Your password"><br>
-      
-      <label for="email">Email:</label>
-      <input type="text" id="email" name="email" placeholder="Your email"><br>
-      
-      <label for="theme">Theme:</label>
-      <select id="theme" name="theme">
-        <option value="light">Light</option>
-        <option value="dark">Dark</option>
-      </select><br>
-      
-      <button type="submit">Save Changes</button>
-    </form>
-  </div>
+    <div class="settings-container">
+        <h2>Advanced Settings</h2>
+        <div class="mode-switch">
+            <label for="theme-switch">Dark Mode:</label>
+            <input type="checkbox" id="theme-switch">
+        </div>
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="text" id="email" placeholder="Enter your email">
+        </div>
+        <div class="form-group">
+            <label for="address">Address:</label>
+            <input type="text" id="address" placeholder="Enter your address">
+        </div>
+        <div class="form-group">
+            <label for="username">Username:</label>
+            <input type="text" id="username" placeholder="Choose a username">
+        </div>
+        <div class="form-group">
+            <label for="bio">Bio:</label>
+            <input type="text" id="bio" placeholder="Write a short bio">
+        </div>
+        <button id="save-button">Save Changes</button>
+    </div>
+
+    <script>
+        // Dark mode toggle
+        const themeSwitch = document.getElementById('theme-switch');
+        const body = document.body;
+
+        themeSwitch.addEventListener('change', () => {
+            body.classList.toggle('dark-mode');
+        });
+
+        // Save button action (console.log in this example)
+        const saveButton = document.getElementById('save-button');
+
+        saveButton.addEventListener('click', () => {
+            const email = document.getElementById('email').value;
+            const address = document.getElementById('address').value;
+            const username = document.getElementById('username').value;
+            const bio = document.getElementById('bio').value;
+
+            console.log("Email: " + email);
+            console.log("Address: " + address);
+            console.log("Username: " + username);
+            console.log("Bio: " + bio);
+        });
+    </script>
 </body>
 </html>
-
