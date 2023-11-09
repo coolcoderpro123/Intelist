@@ -1,1 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f0f0f0;
+      margin: 0;
+      padding: 0;
+    }
+    
+    #sidebar {
+      background-color: #333;
+      color: #fff;
+      width: 250px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100%;
+      padding: 20px;
+    }
+    
+    #content {
+      margin-left: 280px;
+      padding: 20px;
+    }
+    
+    h1 {
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+    
+    label {
+      font-weight: bold;
+    }
+    
+    input[type="text"],
+    input[type="password"],
+    select {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+    }
+    
+    button {
+      background-color: #007BFF;
+      color: #fff;
+      padding: 10px 20px;
+      border: none;
+      cursor: pointer;
+    }
+    
+    button:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <div id="sidebar">
+    <h1>Settings</h1>
+    <ul>
+      <li><a href="#">General</a></li>
+      <li><a href="#">Security</a></li>
+      <li><a href="#">Notifications</a></li>
+    </ul>
+  </div>
+  <div id="content">
+    <h1>General Settings</h1>
+    <form>
+      <label for="username">Username:</label>
+      <input type="text" id="username" name="username" placeholder="Your username"><br>
+      
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password" placeholder="Your password"><br>
+      
+      <label for="email">Email:</label>
+      <input type="text" id="email" name="email" placeholder="Your email"><br>
+      
+      <label for="theme">Theme:</label>
+      <select id="theme" name="theme">
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+      </select><br>
+      
+      <button type="submit">Save Changes</button>
+    </form>
+  </div>
+</body>
+</html>
 
